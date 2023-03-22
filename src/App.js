@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from "styled-components";
 import { Divider } from 'antd'
 import Demo1_float from "./pages/Demo1_float";
@@ -12,6 +12,22 @@ import Demo3_3 from "./pages/Demo3_3";
 import Demo3_4 from "./pages/Demo3_4";
 
 function App() {
+
+  const resizePage = () => {
+    const appContent = document.getElementsByClassName('app-content')?.[0]
+    if(appContent){
+      const appContentHeight = appContent.offsetHeight
+      // console.log(document.body.offsetHeight)
+      appContent.style.height = `${appContentHeight < document.body.offsetHeight? document.body.offsetHeight - 150: appContentHeight}px`
+    }
+  }
+
+  useEffect(()=>{
+    resizePage()
+    window.addEventListener('resize', resizePage)
+    return () => window.removeEventListener('resize', resizePage)
+  },[])
+
   return (
     <Wrapper>
       <div className={'app-content'}>
